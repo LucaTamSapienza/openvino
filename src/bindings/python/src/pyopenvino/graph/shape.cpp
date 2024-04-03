@@ -31,6 +31,12 @@ void regclass_graph_Shape(py::module m) {
             return a == b;
         },
         py::is_operator());
+    shape.def(
+        "__eq__",
+        [](const ov::Shape& a, const py::sequence& b) {
+            return Common::shape_helpers::compare_shapes(a, b);
+        },
+        py::is_operator());
     shape.def("__len__", [](const ov::Shape& v) {
         return v.size();
     });

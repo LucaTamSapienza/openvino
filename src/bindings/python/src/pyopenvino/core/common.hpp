@@ -95,6 +95,19 @@ void get_slice(T& result, const T& shape, size_t start, const size_t step, const
     }
 }
 
+template <typename T>
+bool compare_shapes(const T& a, const py::sequence& b) {
+    if (a.size() != py::len(b)) {
+        return false;
+    }
+    for (size_t i = 0; i < a.size(); ++i) {
+        if (a[i] != py::cast<size_t>(b[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
 }; // namespace shape_helpers
 
 template <typename T>

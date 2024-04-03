@@ -173,10 +173,18 @@ void regclass_graph_PartialShape(py::module m) {
             return a == b;
         },
         py::is_operator());
+
     shape.def(
         "__eq__",
         [](const ov::PartialShape& a, const ov::Shape& b) {
             return a == b;
+        },
+        py::is_operator());
+
+    shape.def(
+        "__eq__",
+        [](const ov::PartialShape& a, const py::sequence& b) {
+            return Common::shape_helpers::compare_shapes(a, b);
         },
         py::is_operator());
 
