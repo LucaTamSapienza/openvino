@@ -410,3 +410,18 @@ def test_shape_slicing_step(shape_type):
     assert list(shape[1::2]) == [2, 4]
     assert list(shape[::-1]) == [5, 4, 3, 2, 1]
     assert list(shape[::-2]) == [5, 3, 1]
+
+@pytest.mark.parametrize("shape_type", [Shape, PartialShape])
+def test_equals(shape_type):
+    test_cases = [
+        ([1, 2, 3, 4, 5], True),
+        ((1, 2, 3, 4, 5), True),
+        ([1, 2, 3, 4, 6], False),
+        ((1, 2, 3, 4, 6), False),
+        ([1, 2, 3, 4], False),
+        ((1, 2, 3, 4), False),
+    ]
+
+    for shape_data, expected in test_cases:
+        shape = shape_type([1, 2, 3, 4, 5])
+        assert (shape == shape_data) == expected
